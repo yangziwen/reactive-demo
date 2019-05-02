@@ -1,6 +1,5 @@
 package io.github.yangziwen.reactivedemo.config;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,10 @@ public class RouterConfig {
 
     @Bean
     public RouterFunction<ServerResponse> timeRouter(@Autowired TimeHandler timeHandler) {
-        return route(GET("/time"), request -> timeHandler.getTime(request));
+        return route()
+                .GET("/time", timeHandler::getTime)
+                .GET("/realtime", timeHandler::getRealtime)
+                .build();
     }
 
 }
