@@ -20,10 +20,10 @@ public class BaseResponse<T> {
                 .build();
     }
 
-    public static <R> BaseResponse<R> error(String message) {
+    public static <R> BaseResponse<R> error(String message, Object...args) {
         return BaseResponse.<R>builder()
                 .code(-1)
-                .message(message)
+                .message(String.format(message, args))
                 .build();
     }
 
