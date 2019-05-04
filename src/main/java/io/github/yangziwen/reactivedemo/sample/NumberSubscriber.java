@@ -1,5 +1,7 @@
 package io.github.yangziwen.reactivedemo.sample;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.reactivestreams.Subscriber;
@@ -26,7 +28,11 @@ public class NumberSubscriber implements Subscriber<Integer> {
 
     @Override
     public void onNext(Integer t) {
-        System.out.println("receive number " + t);
+        String message = String.format("receive number [%s] at [%s]",
+                t, LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+
+        System.out.println(message);
+
         int count = counter.incrementAndGet();
         if (count % n == 0) {
             subscription.request(n);

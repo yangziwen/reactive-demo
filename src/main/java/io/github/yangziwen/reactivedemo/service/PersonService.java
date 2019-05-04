@@ -27,11 +27,12 @@ public class PersonService {
     }
 
     public Flux<Person> findPersonByName(String name) {
-        Query query = Query.query(Criteria.where("name").regex(name + ".+"));
+        Query query = Query.query(Criteria
+                .where("name").regex(name + ".+"));
         return mongoTemplate.find(query, Person.class);
     }
 
-    public Flux<Person> findAll() {
+    public Flux<Person> findAllPerson() {
         return mongoTemplate.findAll(Person.class);
     }
 
