@@ -14,17 +14,17 @@ public class OperatorTest {
                 "fox", "jumped", "over",
                 "the", "lazy", "dog"
         };
-        // 每秒输出一个单词，统计每个字母出现的次数
+        // 每秒输出一个单词，最终统计每个字母出现的次数
         Flux.interval(Duration.ofSeconds(1L))
                 .zipWith(Flux.fromArray(words))
                 .take(words.length)
                 .map(t -> t.getT2())
                 .doOnNext(System.out::println)
                 .flatMap(word -> Flux.fromArray(word.split("")))
-                .groupBy(c -> c)
+                .groupBy(s -> s)
                 .map(flux -> flux.reduceWith(
                         () -> Tuples.of("", 0),
-                        (t, str) -> Tuples.of(str, t.getT2() + 1))
+                        (t, s) -> Tuples.of(s, t.getT2() + 1))
                 )
                 .flatMap(mono -> mono.as(Flux::from))
                 .map(t -> String.format("%s: %d次", t.getT1(), t.getT2()))

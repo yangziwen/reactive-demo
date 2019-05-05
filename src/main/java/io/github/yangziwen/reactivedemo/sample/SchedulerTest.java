@@ -31,8 +31,8 @@ public class SchedulerTest {
     }
 
     private static void printValue(Long value) {
-        String message = value + " on "
-                + Thread.currentThread();
+        String message = String.format(" %d on %s",
+                value, Thread.currentThread());
         System.out.println(message);
     }
 
